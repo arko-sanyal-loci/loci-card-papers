@@ -1,13 +1,17 @@
+<div align="center">
+<img alt="Billo Tech" src="https://raw.githubusercontent.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE/main/brand/billo-tech-mark.svg" width="72">
+
 # loci-card-papers
+</div>
 
 The published research behind **LOCI** (a heat-tiered, goal-conditioned memory architecture for
 LLM agents) and **CARD** (Category-Adaptive Recall Depth, a retrieval scheme built on top of it).
 Nine papers, published on [Technical Disclosure Commons](https://www.tdcommons.org/dpubs_series)
 as defensive publications (one exception noted below), all by Arko Sanyal. This repo is a
 publications archive — the code that implements these ideas lives in
-[`loci-memory-engine`](https://github.com/arko-sanyal/loci-memory-engine) (the RAG pipeline and
-memory core) and [`loci-coordination-bus`](https://github.com/arko-sanyal/loci-coordination-bus)
-(the multi-agent coordination layer).
+[`LOCI-MEMORY-ENGINE`](https://github.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE), the single
+canonical engine repo (memory core, RAG pipeline, and the multi-agent coordination bus under
+`coordination_bus/`).
 
 ## Reading order
 
@@ -41,5 +45,19 @@ not a TD Commons disclosure.
 
 This repo is documentation, not implementation. For the actual, running system built from these
 ideas — with an explicit map of which paper contributed which mechanism to which module — see
-[`loci-memory-engine`](https://github.com/arko-sanyal/loci-memory-engine)'s
-`loci-engine/INDEX.md` and its design spec under `docs/superpowers/specs/`.
+[`LOCI-MEMORY-ENGINE`](https://github.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE). The original
+paper-to-module map (`loci-engine/INDEX.md`) and design spec (`docs/superpowers/specs/`) are kept
+for reference in the archived
+[`loci-memory-engine-1`](https://github.com/arko-sanyal-loci/loci-memory-engine-1).
+
+## Citing and license
+
+Cite a paper as: Sanyal, Arko. "<title>". Technical Disclosure Commons, (<date>).
+`https://www.tdcommons.org/dpubs_series/<number>`. Verified numbers for all nine are in the
+engine's [`PAPERS.md`](https://github.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE/blob/main/PAPERS.md).
+
+Papers 01–08 are CC BY 4.0, as stated on each PDF. Paper 09 states no license. See
+[`LICENSE.md`](LICENSE.md).
+
+<sub>Billo Tech · Arko Sanyal</sub>
+
