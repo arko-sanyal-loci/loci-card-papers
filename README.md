@@ -1,13 +1,17 @@
+<div align="center">
+<img alt="Billo Tech" src="https://raw.githubusercontent.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE/main/brand/billo-tech-mark.svg" width="72">
+
 # loci-card-papers
+</div>
 
 The published research behind **LOCI** (a heat-tiered, goal-conditioned memory architecture for
 LLM agents) and **CARD** (Category-Adaptive Recall Depth, a retrieval scheme built on top of it).
 Nine papers, published on [Technical Disclosure Commons](https://www.tdcommons.org/dpubs_series)
 as defensive publications (one exception noted below), all by Arko Sanyal. This repo is a
 publications archive — the code that implements these ideas lives in
-[`loci-memory-engine`](https://github.com/arko-sanyal/loci-memory-engine) (the RAG pipeline and
-memory core) and [`loci-coordination-bus`](https://github.com/arko-sanyal/loci-coordination-bus)
-(the multi-agent coordination layer).
+[`LOCI-MEMORY-ENGINE`](https://github.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE), the single
+canonical engine repo (memory core, RAG pipeline, and the multi-agent coordination bus under
+`coordination_bus/`).
 
 ## Reading order
 
@@ -25,7 +29,7 @@ continuous architecture, and 01 ↔ 02, which are companion papers on the same c
 | [04](papers/04_Category-Adaptive-Recall-Depth-CARD.pdf) | Category-Adaptive Recall Depth (CARD) for Heat-Tiered Memory Systems, with Experimental Validation on LongMemEval-500 | The retrieval scheme this project's CARD implementation is named after: retrieval depth K and ranking strategy are conditioned on a query-category signal (information extraction, knowledge update, multi-session reasoning, temporal reasoning), each with its own (K, strategy) pair. Validated on the LongMemEval-500 external benchmark at 96.6% overall accuracy, ~14-15 points above reported GPT-4 performance, entirely on local hardware. |
 | [05](papers/05_LOCI-Heat-Decaying-Goal-Conditioned-Memory-Architecture.pdf) | LOCI: A Heat-Decaying, Goal-Conditioned Memory Architecture for Long-Horizon AI Agents | The architecture paper: every fact carries a heat score that decays over time by tier (critical facts survive 30 days, routine facts 3 days, nothing is ever deleted), a circuit breaker that halts before re-processing an identical goal in a loop, and the eight-stream taxonomy (`qsymprev`, `isymprev`, `dsymprev`, `card`, `psymprev`, `ssymprev`, `msymprev`, `fsymprev`) this project's schema is organized around. Also documents the "Imagination Engine" (novel-connection synthesis between high-heat, semantically distant facts) and reports 96.6% accuracy / +18.2pp over zero-memory GPT-4 on the same LongMemEval benchmark. |
 | [06](papers/06_Focused-Retention-LOCI.pdf) | Focused Retention: Goal-Conditioned Switched Decay for LOCI | Extends the heat-decay model with goal-conditioned switched decay (GCSD): a fact bound to an active goal decays at a slow "hold" rate (`λ_hold`, ~14-day half-life) while the goal is open, and switches to a fast "free" rate (`λ_free`, ~2-hour half-life) once the goal resolves — with a five-outcome goal taxonomy (fulfilled / relinquished / nullified / abandoned / reclamped) distinguishing "the goal is done" from "the goal is merely suspended." |
-| [07](papers/07_LOCI-Infinity-Memory-Middleware.pdf) | LOCI ∞: Infinity Memory Middleware | Introduces the `isymprev`/`qsymprev` dual-stream split (narrative/informational vs. exact/quantifiable) this project's schema uses directly, along with the heat-propagation increments (direct access +1.0, 1-hop neighbor +0.5, 2-hop +0.25) and storage-tier thresholds (HOT > 1.5, WARM > 0.5, else COLD) that `loci-memory-engine`'s `heat.py` implements. |
+| [07](papers/07_LOCI-Infinity-Memory-Middleware.pdf) | LOCI ∞: Infinity Memory Middleware | Introduces the `isymprev`/`qsymprev` dual-stream split (narrative/informational vs. exact/quantifiable) this project's schema uses directly, along with the heat-propagation increments (direct access +1.0, 1-hop neighbor +0.5, 2-hop +0.25) and storage-tier thresholds (HOT > 1.5, WARM > 0.5, else COLD) that the first prototype implemented; the current engine rescales heat to 0–1 (HOT ≥ 0.80). |
 | [08](papers/08_LOCI-Persistent-AI-Memory-Engine.pdf) | LOCI: A Persistent AI Memory Engine | Adds versioned exact-fact storage: a `supersedes`/`valid_from`/`valid_until` chain so a fact's history is queryable ("what did we believe as of time T"), source-trust weighting (measured > paper > user-stated, roughly), and an asymmetric conflict gate — a higher-trust source needs less confidence to overturn an existing fact than a lower-trust one does. |
 | [09](papers/09_Thermal-Reasoning-Substrate.pdf) | Thermal Reasoning Substrate: A Heat-Driven Shared Memory Architecture for Parallel LLM Inference | A preprint (not TD Commons) proposing a shared, quantized entity heat-map that parallel reasoning branches read and write to instead of hard-blocking on each other's completion — replacing "wait for branch A to finish" with "wait for branch A's heat/value signal to cross a threshold." Appendix B's dual-stream SQL schema (`isymprev`/`qsymprev`, with the exact decay/increment/tier constants) is the literal base this project's `schema.sql` is transcribed from, and its `preview_query()`/`process_turn()` two-call integration pattern is the intended interface for any LLM to use the memory engine. |
 
@@ -34,12 +38,22 @@ continuous architecture, and 01 ↔ 02, which are companion papers on the same c
 Papers 01–08 are Technical Disclosure Commons defensive publications (TD Commons, a Diamond
 Open Access venue for prior-art disclosures — publishing here places the described techniques in
 the public domain and blocks anyone, including the author, from later patenting them). Each PDF's
-own header carries its TD Commons article number and DOI. Paper 09 is an independent preprint,
-not a TD Commons disclosure.
+own header carries its TD Commons article number. Paper 09 is an independent preprint,
+not a TD Commons disclosure. Full citations and BibTeX: [`REFERENCES.md`](REFERENCES.md).
+
+## License
+
+Papers 01–08 are published by Technical Disclosure Commons under
+[Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/): share and adapt
+with credit. Paper 09 (preprint) © 2026 Arko Sanyal, all rights reserved. The code that
+implements the papers has its own license in
+[`LOCI-MEMORY-ENGINE`](https://github.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE/blob/main/LICENSE.md).
 
 ## Relationship to the code
 
 This repo is documentation, not implementation. For the actual, running system built from these
 ideas — with an explicit map of which paper contributed which mechanism to which module — see
-[`loci-memory-engine`](https://github.com/arko-sanyal/loci-memory-engine)'s
-`loci-engine/INDEX.md` and its design spec under `docs/superpowers/specs/`.
+[`LOCI-MEMORY-ENGINE`](https://github.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE). The original
+paper-to-module map (`loci-engine/INDEX.md`) and design spec (`docs/superpowers/specs/`) are kept
+for reference in the read-only
+[`loci-memory-engine-1`](https://github.com/arko-sanyal-loci/loci-memory-engine-1).
