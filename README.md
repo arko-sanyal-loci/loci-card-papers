@@ -49,3 +49,15 @@ ideas — with an explicit map of which paper contributed which mechanism to whi
 paper-to-module map (`loci-engine/INDEX.md`) and design spec (`docs/superpowers/specs/`) are kept
 for reference in the archived
 [`loci-memory-engine-1`](https://github.com/arko-sanyal-loci/loci-memory-engine-1).
+
+## Citing and license
+
+Cite a paper as: Sanyal, Arko. "<title>". Technical Disclosure Commons, (<date>).
+`https://www.tdcommons.org/dpubs_series/<number>`. Verified numbers for all nine are in the
+engine's [`PAPERS.md`](https://github.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE/blob/main/PAPERS.md).
+
+Papers 01–08 are CC BY 4.0, as stated on each PDF. Paper 09 states no license. See
+[`LICENSE.md`](LICENSE.md).
+
+<sub>Billo Tech · Arko Sanyal</sub>
+
