@@ -1,5 +1,5 @@
 <div align="center">
-<img alt="Billo Tech" src="https://raw.githubusercontent.com/arko-sanyal-loci/LOCI-MEMORY-ENGINE/main/brand/billo-tech-mark.svg" width="72">
+<img alt="Billo Tech" src="assets/billo-tech-mark.svg" width="72">
 
 # loci-card-papers
 </div>
